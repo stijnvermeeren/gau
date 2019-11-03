@@ -11,7 +11,7 @@ Put together, Gau is a tool that runs in the browser and quickly finds the key t
 ## Training the language model
 The language model requires a JSON file with character n-gram counts (1-gram, 2-gram and 3-gram).
 
-A Node.js script `counts.js` is provided to generate this file based on a plain text file. It is executed using the command 
+A Node.js script `util/counts.js` is provided to generate this file based on a plain text file. It is executed using the command 
 ```
 node counts.js <dataFile> <outputFile>
 ```
@@ -29,5 +29,5 @@ Hello world!
 ```
 the resulting output file will contain
 ```json
-{"^^h":2,"^hi":1,"hi$":1,"i$$":1,"^h":2,"hi":1,"i$":1,"h":2,"i":1,"^he":1,"hel":1,"ell":1,"llo":1,"low":1,"owo":1,"wor":1,"orl":1,"rld":1,"ld$":1,"d$$":1,"he":1,"el":1,"ll":1,"lo":1,"ow":1,"wo":1,"or":1,"rl":1,"ld":1,"d$":1,"e":1,"l":3,"o":2,"w":1,"r":1,"d":1} 
+{"^^^":2,"^^h":2,"^hi":1,"hi$":1,"^^":2,"^h":2,"hi":1,"i$":1,"^":2,"h":2,"i":1,"$":2,"^he":1,"hel":1,"ell":1,"llo":1,"low":1,"owo":1,"wor":1,"orl":1,"rld":1,"ld$":1,"he":1,"el":1,"ll":1,"lo":1,"ow":1,"wo":1,"or":1,"rl":1,"ld":1,"d$":1,"e":1,"l":3,"o":2,"w":1,"r":1,"d":1}
 ```

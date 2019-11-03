@@ -16,10 +16,9 @@ fs.readFile(dataFile, 'utf8', function(err, contents) {
     if (line.length) {
       var content = line.toLowerCase().replace(/[^a-z]/g, '')
       for (var length = maxNGram; length > 0; length--) {
-        var paddingLength = length - 1;
         // pad with ^ (start of line) and $ (end of line) characters
-        paddedLine = '^'.repeat(paddingLength) + content + '$'.repeat(paddingLength)
-        for (var pos = 0; pos < paddedLine.length - paddingLength; pos++) {
+        var paddedLine = '^'.repeat(length) + content + '$'
+        for (var pos = 0; pos <= paddedLine.length - length; pos++) {
           var nGram = paddedLine.slice(pos, pos + length);
           if (!counts[nGram]) {
             counts[nGram] = 0;
