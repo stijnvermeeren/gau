@@ -11,9 +11,9 @@ Put together, Gau is a tool that runs in the browser and quickly finds the key t
 ## Training the language model
 The language model requires a JSON file with character n-gram counts (1-gram, 2-gram and 3-gram).
 
-A Node.js script `util/counts.js` is provided to generate this file based on a plain text file. It is executed using the command 
+A Node.js script `util/count.js` is provided to generate this file based on a plain text file. It is executed using the command 
 ```
-node counts.js <dataFile> <outputFile>
+node util/count.js <dataFile> <outputFile>
 ```
 
 This script
