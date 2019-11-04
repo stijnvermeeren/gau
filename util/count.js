@@ -1,25 +1,29 @@
-var fs = require('fs');
+const fs = require('fs');
 
-var args = process.argv.slice(2);
+const args = process.argv.slice(2);
 
 if (args.length < 2) {
   return console.log("Not enough arguments. Usage: `node counts.js <dataFile> <countFile>`")
 }
-var dataFile = args[0];
-var countsFile = args[1];
+const dataFile = args[0];
+const countsFile = args[1];
 
 fs.readFile(dataFile, 'utf8', function(err, contents) {
-  var maxNGram = 3
-  var counts = {}
+  if (err) {
+    return console.log("Error reading data", err);
+  }
+
+  const maxNGram = 3
+  const counts = {}
 
   contents.split(/\n/).forEach(line => {
     if (line.length) {
-      var content = line.toLowerCase().replace(/[^a-z]/g, '')
-      for (var length = maxNGram; length > 0; length--) {
+      const content = line.toLowerCase().replace(/[^a-z]/g, '')
+      for (let length = maxNGram; length > 0; length--) {
         // pad with ^ (start of line) and $ (end of line) characters
-        var paddedLine = '^'.repeat(length) + content + '$'
-        for (var pos = 0; pos <= paddedLine.length - length; pos++) {
-          var nGram = paddedLine.slice(pos, pos + length);
+        const paddedLine = '^'.repeat(length) + content + '$'
+        for (let pos = 0; pos <= paddedLine.length - length; pos++) {
+          const nGram = paddedLine.slice(pos, pos + length);
           if (!counts[nGram]) {
             counts[nGram] = 0;
           }
@@ -34,8 +38,4 @@ fs.readFile(dataFile, 'utf8', function(err, contents) {
       return console.log("Error writing results", err);
     }
   });
-
-  if (err) {
-    return console.log("Error reading data", err);
-  }
 });
