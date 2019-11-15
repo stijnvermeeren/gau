@@ -1,4 +1,5 @@
 const fs = require('fs');
+const ngram = require('../modules/ngram')
 
 const args = process.argv.slice(2);
 
@@ -13,25 +14,19 @@ fs.readFile(dataFile, 'utf8', function(err, contents) {
     return console.log("Error reading data", err);
   }
 
-  const maxNGram = 3
-  const counts = {}
+  const maxN = 3
+  let ngrams = []
 
   contents.split(/\n/).forEach(line => {
     if (line.length) {
       const content = line.toLowerCase().replace(/[^a-z]/g, '')
-      for (let length = maxNGram; length > 0; length--) {
-        // pad with ^ (start of line) and $ (end of line) characters
-        const paddedLine = '^'.repeat(length) + content + '$'
-        for (let pos = 0; pos <= paddedLine.length - length; pos++) {
-          const nGram = paddedLine.slice(pos, pos + length);
-          if (!counts[nGram]) {
-            counts[nGram] = 0;
-          }
-          counts[nGram]++;
-        }
+      for (let length = maxN; length > 0; length--) {
+        ngrams = ngrams.concat(ngram.ngramsForN(content, length))
       }
     }
   })
+
+  const counts = ngram.counts(ngrams)
 
   fs.writeFile(countsFile, JSON.stringify(counts), function(err) {
     if (err) {

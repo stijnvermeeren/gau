@@ -1,7 +1,8 @@
 import model from '../model.json'
+import ngram from '../modules/ngram'
 
 export const alphabet = [...'abcdefghijklmnopqrstuvwxyz']
-const maxNGram = 3
+const maxN = 3
 
 // initialise empty string as total character count
 model[''] = alphabet.map(count).reduce((a, b) => a + b) + count("$")
@@ -22,12 +23,9 @@ export function logP(text) {
 
   text = text.toLowerCase().replace(/[^a-z]/g, '')
 
-  const paddingLength = maxNGram - 1;
-  // pad with ^ (start of line) and $ (end of line) characters
-  const paddedLine = '^'.repeat(paddingLength) + text + '$'
-  for (let pos = 0; pos < paddedLine.length - paddingLength; pos++) {
-    logP += logPNGram(paddedLine.slice(pos, pos + maxNGram));
-  }
+  ngram.ngramsForN(text, maxN).forEach(ngram => {
+    logP += logPNGram(ngram)
+  })
 
   return logP
 }
